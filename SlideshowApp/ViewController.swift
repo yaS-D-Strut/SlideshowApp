@@ -11,7 +11,6 @@ import UIKit
 class ViewController: UIViewController {
     
 
-
     
     @IBOutlet weak var imageView0: UIImageView!
     
@@ -98,11 +97,16 @@ class ViewController: UIViewController {
         //segueから遷移先のResultViewControllerを取得する
         let resultViewController:ResultViewController = segue.destination as! ResultViewController
         resultViewController.image = imageView0.image
-        
-    }
+        print("画像")
+        if self.timer != nil{
+            self.timer.invalidate()
+            self.timer = nil
+
+        }    }
     @IBAction func unwind(_ segeu: UIStoryboardSegue){
     }
     @IBAction func tapAction(_ sender: Any) {
+        
         
     }
     
@@ -117,19 +121,28 @@ class ViewController: UIViewController {
         
     }
 
+    @IBOutlet weak var startSlide: UIButton!
     
-
+    
+    
     @IBAction func startSlide(_ sender: Any) {
         if self.timer == nil{
         self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(onTimer(_:)), userInfo: nil, repeats: true)
+            startSlide.setTitle("停止", for: .normal)
         }else
         if self.timer != nil {
             self.timer.invalidate()
             self.timer = nil
+            startSlide.setTitle("再生", for: .normal)
+            if self.timer == nil{
+                
+                
+            }
         }
         
-
         
+
+
         //表示している画像の番号を1増やす
         
         if dispImageNo == 1 {
@@ -145,7 +158,8 @@ class ViewController: UIViewController {
         displayImage()
         
     }
-
+    
+    
     
     override func didReceiveMemoryWarning(){
         super.didReceiveMemoryWarning()
