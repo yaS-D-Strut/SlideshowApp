@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     var timer_sec: Float = 0
     
 
+    @IBOutlet weak var onNext: UIButton!
     @IBAction func onNext(_ sender: AnyObject) {
         
         if self.timer == nil{
@@ -33,14 +34,15 @@ class ViewController: UIViewController {
     }
     }
     
+    @IBOutlet weak var onPrev: UIButton!
     @IBAction func onPrev(_ sender: AnyObject) {
         
         if self.timer == nil{
         //表示している画像の番号を1減らす
         dispImageNo -= 1
         //表示している画像の番号を元に画像を表示する
-        displayImage()
-    }
+        displayImage()                
+        }
     }
     
     //表示している画像の番号
@@ -85,7 +87,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let image = UIImage(named: "chari")
+        let image = UIImage(named: "hikouki")
         imageView0.image = image
         
     }
@@ -101,16 +103,17 @@ class ViewController: UIViewController {
         if self.timer != nil{
             self.timer.invalidate()
             self.timer = nil
-
+            startSlide.setTitle("再生", for: .normal)
         }    }
     @IBAction func unwind(_ segeu: UIStoryboardSegue){
     }
     @IBAction func tapAction(_ sender: Any) {
-        
-        
+        self.timer_sec = 0
+        if self.timer != nil {
+            self.timer.invalidate()
+            self.timer = nil
+        }
     }
-    
-    
     
     @objc func onTimer(_ timer: Timer){
         //表示している画像の番号を1増やす
@@ -129,10 +132,14 @@ class ViewController: UIViewController {
         if self.timer == nil{
         self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(onTimer(_:)), userInfo: nil, repeats: true)
             startSlide.setTitle("停止", for: .normal)
+            onPrev.isEnabled = false
+            onNext.isEnabled = false
         }else
         if self.timer != nil {
             self.timer.invalidate()
             self.timer = nil
+            onPrev.isEnabled = true
+            onNext.isEnabled = true
             startSlide.setTitle("再生", for: .normal)
             if self.timer == nil{
                 
@@ -140,22 +147,7 @@ class ViewController: UIViewController {
             }
         }
         
-        
 
-
-        //表示している画像の番号を1増やす
-        
-        if dispImageNo == 1 {
-            dispImageNo += 1
-        }else if dispImageNo < 2{
-            dispImageNo += 1
-        }else if dispImageNo < 2{
-            dispImageNo -= 2
-        }
-
-        
-        //表示している画像の番号を元に画像を表示する
-        displayImage()
         
     }
     
